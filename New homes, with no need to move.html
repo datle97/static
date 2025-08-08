@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="utf-8">
+
+<meta name="viewport" content="width=device-width">
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<meta name="x-apple-disable-message-reformatting">
+
+<title>New homes, with no need to move</title>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href='https://fonts.googleapis.com/css?family=Lato:400,900' rel='stylesheet' type='text/css'>
+
+<style>
+/* What it does: Remove spaces around the email design added by some email clients. */
+
+/* Beware: It can remove the padding / margin and add a background color to the compose a reply window. */
+
+html,
+body {
+margin: 0 auto !important;
+padding: 0 !important;
+height: 100% !important;
+width: 100% !important;
+font-family: 'Lato', Tahoma, sans-serif;
+}
+
+/* What it does: Stops email clients resizing small text. */
+
+* {
+-ms-text-size-adjust: 100%;
+-webkit-text-size-adjust: 100%;
+}
+
+/* What it does: Centers email on Android 4.4 */
+
+div[style*="margin: 16px 0"] {
+margin: 0 !important;
+}
+
+/* What it does: Stops Outlook from adding extra spacing to tables. */
+
+table,
+td {
+mso-table-lspace: 0pt !important;
+mso-table-rspace: 0pt !important;
+}
+
+/* What it does: Fixes webkit padding issue. Fix for Yahoo mail table alignment bug. Applies table-layout to the first 2 tables then removes for anything nested deeper. */
+
+table {
+border-spacing: 0 !important;
+border-collapse: collapse !important;
+table-layout: fixed !important;
+margin: 0 auto !important;
+}
+
+table table table {
+table-layout: auto;
+}
+
+/* What it does: Uses a better rendering method when resizing images in IE. */
+
+img {
+-ms-interpolation-mode: bicubic;
+}
+
+/* What it does: Prevents Windows 10 Mail from underlining links despite inline CSS. Styles for underlined links should be inline. */
+
+a {
+text-decoration: none;
+color: inherit !important;
+font-size: inherit !important;
+display: block;
+}
+
+a h2 {
+text-decoration: none;
+color: inherit !important;
+font-size: inherit !important;
+}
+
+/* What it does: A work-around for email clients meddling in triggered links. */
+
+*[X-APPLE-DATA-DETECTORS],
+/* iOS */
+
+ .unstyle-auto-detected-links *,
+ .aBn {
+border-bottom: 0 !important;
+cursor: default !important;
+color: inherit !important;
+text-decoration: none !important;
+font-size: inherit !important;
+font-family: inherit !important;
+font-weight: inherit !important;
+line-height: inherit !important;
+}
+
+/* What it does: Prevents Gmail from displaying a download button on large, non-linked images. */
+
+ .a6S {
+display: none !important;
+opacity: 0.01 !important;
+}
+
+/* If the above doesn't work, add a .ncg-img class to any image in question. */
+
+/*
+img.ncg-img+div {
+display: none !important;
+} */
+
+/* What it does: Removes right gutter in Gmail iOS app: https://github.com/TedGoas/Cerberus/issues/89  */
+
+/* Create one of these media queries for each additional viewport size you'd like to fix */
+
+/* iPhone 4, 4S, 5, 5S, 5C, and 5SE */
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 374px) {
+ .email-container {
+min-width: 320px !important;
+}
+}
+
+/* iPhone 6, 6S, 7, 8, and X */
+
+@media only screen and (min-device-width: 375px) and (max-device-width: 413px) {
+ .email-container {
+min-width: 375px !important;
+}
+}
+
+/* iPhone 6+, 7+, and 8+ */
+
+@media only screen and (min-device-width: 414px) {
+ .email-container {
+min-width: 414px !important;
+}
+}
+</style>
+
+
+
+
+
+<style>
+/* What it does: Hover styles for buttons */
+
+ .button-td,
+ .button-a {
+transition: all 100ms ease-in;
+}
+
+ .button-td-primary:hover,
+ .button-a-primary:hover {
+background: #555555 !important;
+border-color: #555555 !important;
+}
+
+ .two-col-padding {
+padding: 0 10px;
+}
+
+ .two-col-padding img{
+max-width: none !important;
+}
+
+/* Media Queries */
+
+@media screen and (max-width: 480px) {
+
+/* What it does: Forces elements to resize to the full width of their container. Useful for resizing images beyond their max-width. */
+ .fluid {
+width: 100% !important;
+max-width: 100% !important;
+height: auto !important;
+margin-left: auto !important;
+margin-right: auto !important;
+}
+
+/* What it does: Forces table cells into full-width rows. */
+ .stack-column,
+ .stack-column-center {
+display: block !important;
+width: 100% !important;
+max-width: 100% !important;
+direction: ltr !important;
+}
+/* And center justify these ones. */
+ .stack-column-center {
+text-align: center !important;
+}
+
+/* What it does: Generic utility class for centering. Useful for images, buttons, and nested tables. */
+ .center-on-narrow {
+text-align: center !important;
+display: block !important;
+margin-left: auto !important;
+margin-right: auto !important;
+float: none !important;
+}
+table.center-on-narrow {
+display: inline-block !important;
+}
+
+/* What it does: Adjust typography on small screens to improve readability */
+ .email-container p {
+font-size: 17px !important;
+}
+ .two-col-padding {
+padding: 0 20px;
+}
+}
+
+</style>
+
+
+
+
+
+</head>
+
+
+<body width="100%" style="margin: 0; padding: 0 !important; mso-line-height-rule: exactly; background-color: #eff1f0;">
+<center style="width: 100%; background-color: #eff1f0;">
+
+
+
+
+
+
+
+
+
+
+
+
+<div style="max-width: 680px; margin: 1% auto;background-color: #ffffff;" class="email-container">
+
+
+
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: 0 auto;">
+<tbody>
+    <tr>
+<td	style="text-align: right; font-family: 'Lato',Tahoma,sans-serif;padding: 15px 20px 0 ; color: #b00;">
+<a href="https://starmedia.ncm32.com/vtrack?clientid=71316&ul=VgAJCQFFAhoMVwcIXldyTF9VRxZVSx9UVl0fD0FEXg0DXAxcdkVRVBVHVREYWlZbGFkYTBgD&ml=WAUCDAkJAxpWRFBSAQMBREsA&sl=I0hyRGxqTjUrbBoVRFNAVVJUXQMaV1JaCgIfAVdVSFI=&pp=Gkk=&fl=CUBFSEoDHUkHSA9IXldGW1hCURFZWENDXFNZTFtXWU0UAU1JRFRPWANEGhNeSQ==&ext=bmM9dm0mbT05MTM0JnU9W1VOSVFJRF0md3ZpZD0wMDE=&c=0000" style="font-size: 10px;font-weight: 500">View in browser</a>
+</td>
+</tr>
+
+<tr>
+<td style="background-color: #ffffff;padding: 20px 20px 0;">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+<tbody>
+<tr>
+<td style="padding: 5px 0 0; font-family: 'Lato',Tahoma,sans-serif; font-size: 15px; line-height: 20px; color: #555555;">
+<img src="https://cdn.thestar.com.my/Themes/img/DailyAlert_header_footer_logo.png" width="205" height="50" alt="The Star" border="0" style="height: auto; background: #ffffff; font-family: 'Lato',Tahoma,sans-serif; font-size: 15px; line-height: 15px; color: #555555;">
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+
+
+<tr>
+<td style="background-color: #ffffff;padding: 20px 20px 1px;">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+<tbody>
+    <tr>
+<td style="font-family: 'Lato',Tahoma,sans-serif; font-size: 15px; line-height: 20px; color: #555555; padding-top: 5px;border-top: 1.5px solid #d6d6d6;border-bottom: 1.5px solid #d6d6d6;" class="stack-column">
+<h2 style="margin: 0;line-height: 27px;font-size: 18px;color: #4a4a4a; margin-top: 5px;font-weight: 900;display: inline-block;border-right: 1px solid #dfdfdf;margin-right: 5px;padding-right: 9px;">Thursday, 22 May 2025</h2> <span class="clock" style="display: inline-block;position: relative;top:-1px;">08:45 AM MYT</span>
+<hr style="border: 1.5px solid #b00;width: 100px;margin: 5px 0 0;background-color: #b00">
+</td>
+</tr>
+</tbody>
+    </table>
+</td>
+</tr>
+
+
+<tr>
+<td style="background-color: #ffffff;padding: 20px 20px 0;">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+    <tbody>
+<tr>
+<td style="padding: 0 0 20px; font-family: 'Lato',Tahoma,sans-serif; font-size: 15px; line-height: 20px; color: #555555;border-bottom: 1px solid #dfdfdf;">
+
+<a href="https://starmedia.ncm32.com/vtrack?clientid=71316&ul=VgAJCQFFAhoMVwcIXldyTF9VRxZVSx9UVl0fD0FEXg0DXAxcdkVRVBVHVREYWlZbGFkYTBgD&ml=WAUCDAkJAxpWRFBSAQMGREsA&sl=I0hyRGxqTjUrbBoVRFNAVVJUXQMaV1JaCgIfAVdVSFI=&pp=0&fl=CUBFSEoDHUkRTxFIRFpXS0NRRkxXVlwZVEkeDF1PR00MUxZQWV8WA1YBAUwGDBYEBBsPVRMfClgMV0EcRVFMUExaXhVXXFcCS0wJS11dRF0=&ext=&c=0000" style="color:#4a4a4a; text-decoration:none" target="_blank">
+<img src="https://apicms.thestar.com.my/uploads/images/2025/05/22/thumbs/large/3327789.jpg" width="680" height="" alt="New homes, with no need to move" border="0" style="width: 100%; max-width: 680px; height: auto; background: #dddddd; font-family: 'Lato',Tahoma,sans-serif; font-size: 15px; line-height: 15px; color: #555555; margin: 0 auto 5px;" class="fluid ncg-img">
+<span style="text-transform: uppercase;color: #aa1f1f;font-weight: 900;font-size:12px;margin-right: 6px;line-height: 20px">Nation</span>
+<span style="margin: 0 0 10px; font-size: 25px; line-height: 30px; color: #4a4a4a; font-weight: 900;display: block;">New homes, with no need to move </span>
+<span style="margin: 0 0 10px;font-size: 16px; line-height: 21.6px;">GEORGE TOWN: Penang's first urban renewal project is valued at RM600mil  and not one of the current residents has to move out.</span>
+</a>
+
+</td>
+</tr>
+</tbody>
+    </table>
+</td>
+</tr>
+
+
+<tr>
+<td style="background-color: #ffffff;padding: 15px 20px 0;">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+<tbody>
+    <tr>
+<td style="padding: 0px 20px 10px; font-family: 'Lato',Tahoma,sans-serif; font-size: 15px; line-height: 20px; color: #555555;border-bottom: 1px solid #dfdfdf;">
+
+<a href="https://starmedia.ncm32.com/vtrack?clientid=71316&ul=VgAJCQFFAhoMVwcIXldyTF9VRxZVSx9UVl0fD0FEXg0DXAxcdkVRVBVHVREYWlZbGFkYTBgD&ml=WAUCDAkJAxpWRFBSAQMHREsA&sl=I0hyRGxqTjUrbBoVRFNAVVJUXQMaV1JaCgIfAVdVSFI=&pp=0&fl=CUBFSEoDHUkRTxFIRFpXS0NRRkxXVlwZVEkeDlFeUREWSw5cGVRXRQNBQAJfV1RTWEBOAlQAVxhRBx0DAxdbUAhaVEtcFFMFEkoDFUMfSFBCHU0XVVdIQlheHAZRXUdPDVRPWldfWlQUHlUXGwwIG1xBEkRJA1QaBVNLQh9ZXkwERhxPS1hCFg9WAUtWW1xZWx1QEFVUUA==&ext=&c=0000" style="color:#4a4a4a; text-decoration:none" target="_blank">
+<span style="text-transform: uppercase;color: #aa1f1f;font-weight: 900;font-size:12px;margin-right: 6px;line-height: 20px">Entertainment</span>
+<span style="margin: 0 0 10px;font-size: 21px; line-height: 26px; color: #4a4a4a; font-weight: bold;display: block;">Chinese actress Zhu Yuanyuan dies of cancer at 51, just 16 days after wrapping final drama </span>
+</a>
+</td>
+</tr>
+</tbody>
+    </table>
+</td>
+</tr>
+<tr>
+<td style="background-color: #ffffff;padding: 15px 20px 0;">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+<tbody>
+<tr>
+<td style="padding: 0 20px 10px; font-family: 'Lato',Tahoma,sans-serif; font-size: 15px; line-height: 20px; color: #555555;border-bottom: 1px solid #dfdfdf;">
+
+<a href="https://starmedia.ncm32.com/vtrack?clientid=71316&ul=VgAJCQFFAhoMVwcIXldyTF9VRxZVSx9UVl0fD0FEXg0DXAxcdkVRVBVHVREYWlZbGFkYTBgD&ml=WAUCDAkJAxpWRFBSAQMEREsA&sl=I0hyRGxqTjUrbBoVRFNAVVJUXQMaV1JaCgIfAVdVSFI=&pp=0&fl=CUBFSEoDHUkRTxFIRFpXS0NRRkxXVlwZVEkeDF1PR00MUxZQWV8WA1YBAUwGDBYEBBsRVRBADURMVVNYXEsVXgRQVEpYVR8ICVw=&ext=&c=0000" style="color:#4a4a4a; text-decoration:none" target="_blank">
+<span style="text-transform: uppercase;color: #aa1f1f;font-weight: 900;font-size:12px;margin-right: 6px;line-height: 20px">Nation</span>
+<span style="margin: 0 0 10px;font-size: 21px; line-height: 26px; color: #4a4a4a; font-weight: bold;display: block;">Petros gains federal nod </span>
+</a>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td style="background-color: #ffffff;padding: 15px 20px 0;">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+<tbody>
+    <tr>
+<td style="padding: 0px 20px 10px; font-family: 'Lato',Tahoma,sans-serif; font-size: 15px; line-height: 20px; color: #555555;border-bottom: 1px solid #dfdfdf;">
+
+<a href="https://starmedia.ncm32.com/vtrack?clientid=71316&ul=VgAJCQFFAhoMVwcIXldyTF9VRxZVSx9UVl0fD0FEXg0DXAxcdkVRVBVHVREYWlZbGFkYTBgD&ml=WAUCDAkJAxpWRFBSAQMFREsA&sl=I0hyRGxqTjUrbBoVRFNAVVJUXQMaV1JaCgIfAVdVSFI=&pp=0&fl=CUBFSEoDHUkRTxFIRFpXS0NRRkxXVlwZVEkeDF1PR00MUxZQWV8WA1YBAUwGDBYEBBsSRAVZB18OXlZUQEsVSBNRV11LFF0WElEJCFFeH0pSRF0QUVRUWU0dUBYVDgE=&ext=&c=0000" style="color:#4a4a4a; text-decoration:none" target="_blank">
+<span style="text-transform: uppercase;color: #aa1f1f;font-weight: 900;font-size:12px;margin-right: 6px;line-height: 20px">Nation</span>
+<span style="margin: 0 0 10px;font-size: 21px; line-height: 26px; color: #4a4a4a; font-weight: bold;display: block;">Stakeholders prefer optional retirement at 65 </span>
+</a>
+</td>
+</tr>
+</tbody>
+    </table>
+</td>
+</tr>
+<tr>
+<td style="background-color: #ffffff;padding: 15px 20px 0;">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+<tbody>
+    <tr>
+<td style="padding: 0px 20px 10px; font-family: 'Lato',Tahoma,sans-serif; font-size: 15px; line-height: 20px; color: #555555;border-bottom: 1px solid #dfdfdf;">
+
+<a href="https://starmedia.ncm32.com/vtrack?clientid=71316&ul=VgAJCQFFAhoMVwcIXldyTF9VRxZVSx9UVl0fD0FEXg0DXAxcdkVRVBVHVREYWlZbGFkYTBgD&ml=WAUCDAkJAxpWRFBSAQMKREsA&sl=I0hyRGxqTjUrbBoVRFNAVVJUXQMaV1JaCgIfAVdVSFI=&pp=0&fl=CUBFSEoDHUkRTxFIRFpXS0NRRkxXVlwZVEkeDF1PR01QAlAMGQEMHlQBGwpYTVxEV1cVWRJXT0QVQF1fVV1KFQddVlBNFFwDA1wDAh1TVVleXkcWGUpER1xCUxdfSxkDER8RVltUFFYDQVkQG15LWUEZDF8WV09FBEFbQkZZVkw=&ext=&c=0000" style="color:#4a4a4a; text-decoration:none" target="_blank">
+<span style="text-transform: uppercase;color: #aa1f1f;font-weight: 900;font-size:12px;margin-right: 6px;line-height: 20px">Nation</span>
+<span style="margin: 0 0 10px;font-size: 21px; line-height: 26px; color: #4a4a4a; font-weight: bold;display: block;">INTERACTIVE: Stronger fight needed against superbugs as some germs grow more resistant </span>
+</a>
+</td>
+</tr>
+</tbody>
+    </table>
+</td>
+</tr>     
+                <tr>
+                    <td style="background-color: #ffffff;padding: 20px 20px 0;">
+                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                            <tr>
+                                <td>
+                                    <a href="https://starmedia.ncm32.com/vtrack?clientid=71316&ul=VgAJCQFFAhoMVwcIXldyTF9VRxZVSx9UVl0fD0FEXg0DXAxcdkVRVBVHVREYWlZbGFkYTBgD&ml=WAUCDAkJAxpWRFBSAAQKREsA&sl=I0hyRGxqTjUrbBoVRFNAVVJUXQMaV1JaCgIfAVdVSFI=&pp=0&fl=CUBFSEoDHUkEURJIXEsdfWR3YzEGDG5zCAI=&ext=&c=0000" style="color:#4a4a4a; text-decoration:none" target="_blank">
+                                        <img alt="Lego" border="0" class="fluid ncg-img" height="" src="https://d1l8l3rp33cdzs.cloudfront.net/images/starmediasmt/ESGWorkshop_TSDA.gif" style="display:block;width: 100%; max-width: 600px; height: auto; background: #dddddd; font-family: 'Lato',Tahoma,sans-serif; font-size: 15px; line-height: 15px; color: #555555; margin: 0 auto 5px;" width="600" />
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding:0 20px 20px; font-family: 'Lato',Tahoma,sans-serif; font-size: 10px; line-height: 20px; color: #9b9b9b;text-align: center;font-weight: 400;">
+                                    <span>ADVERTISEMENT</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                	
+<tr>
+<td style="background-color: #ffffff;padding: 20px 20px 0;">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+<tbody>
+    <tr>
+<td style="padding: 0 0 20px; font-family: 'Lato',Tahoma,sans-serif; font-size: 15px; line-height: 20px; color: #555555;border-bottom: 1px solid #dfdfdf;">
+
+<a href="https://starmedia.ncm32.com/vtrack?clientid=71316&ul=VgAJCQFFAhoMVwcIXldyTF9VRxZVSx9UVl0fD0FEXg0DXAxcdkVRVBVHVREYWlZbGFkYTBgD&ml=WAUCDAkJAxpWRFBSAQMLREsA&sl=I0hyRGxqTjUrbBoVRFNAVVJUXQMaV1JaCgIfAVdVSFI=&pp=0&fl=CUBFSEoDHUkRTxFIRFpXS0NRRkxXVlwZVEkeDF1PR00MUxZQWV8WA1YBAUwGDBYEBBsAXRYfAxoSW15UXEwVSABaVV1UUFFLElAHEh1fR0tDHVYHGVhVU0tVQhFdXA==&ext=&c=0000" style="color:#4a4a4a; text-decoration:none" target="_blank">
+<img src="https://apicms.thestar.com.my/uploads/images/2025/05/22/thumbs/large/3327867.jpeg" width="680" height="" alt="Lego" border="0" style="width: 100%; max-width: 680px; height: auto; background: #dddddd; font-family: 'Lato',Tahoma,sans-serif; font-size: 15px; line-height: 15px; color: #555555; margin: 0 auto 5px;" class="fluid ncg-img">
+<span style="text-transform: uppercase;color: #aa1f1f;font-weight: 900;font-size:12px;margin-right: 6px;line-height: 20px">Nation</span>
+<span style="margin: 0 0 10px; font-size: 25px; line-height: 30px; color: #4a4a4a; font-weight: 900;display: block;">AMR: A silent pandemic that must be addressed</span>
+
+</a>
+
+</td>
+</tr>
+</tbody>
+    </table>
+</td>
+</tr>
+
+<tr>
+<td style="background-color: #ffffff;padding: 20px 20px 0;">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+<tbody>
+    <tr>
+<td style="padding: 0 0 20px; font-family: 'Lato',Tahoma,sans-serif; font-size: 15px; line-height: 20px; color: #555555;">
+
+<a href="https://starmedia.ncm32.com/vtrack?clientid=71316&ul=VgAJCQFFAhoMVwcIXldyTF9VRxZVSx9UVl0fD0FEXg0DXAxcdkVRVBVHVREYWlZbGFkYTBgD&ml=WAUCDAkJAxpWRFBSAQACREsA&sl=I0hyRGxqTjUrbBoVRFNAVVJUXQMaV1JaCgIfAVdVSFI=&pp=0&fl=CUBFSEoDHUkRTxFIRFpXS0NRRkxXVlwZVEkeDlFeUREWSw5cGVRXRQNBQAJfV1RTWEBOAlQAVxhRBx0DAxdbUARVRV1dFFAfS10eS1hHQVpWXlBPQ1FeGlxdUwdCQlgHBh8KXEQcWEIVVkAQG11QQFlGAlUAHwNUFUBXQkEVWl0CW1xdShRGBx5RSwJCW0RdRR1ADRlLUF5KVRwGWU1TChZXEA==&ext=&c=0000" style="color:#4a4a4a; text-decoration:none" target="_blank">
+<img src="https://apicms.thestar.com.my/uploads/images/2025/05/20/thumbs/large/3325244.jpg" width="680" height="" alt="Huawei" border="0" style="width: 100%; max-width: 680px; height: auto; background: #dddddd; font-family: 'Lato',Tahoma,sans-serif; font-size: 15px; line-height: 15px; color: #555555; margin: 0 auto 5px;" class="fluid ncg-img">
+<span style="text-transform: uppercase;color: #aa1f1f;font-weight: 900;font-size:12px;margin-right: 6px;line-height: 20px">Entertainment</span>
+<span style="margin: 0 0 10px; font-size: 25px; line-height: 30px; color: #4a4a4a; font-weight: 900;display: block;">Cheated by ex-husband who embezzled her assets, divorced actress becomes taxi driver to raise daughter</span>
+
+</a>
+
+</td>
+</tr>
+    </tbody>
+</table>
+</td>
+</tr>
+
+<tr>
+<td style="background-color: #ffffff;padding: 0 20px">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+    <tbody>
+<tr>
+<td style="padding: 15px 0 15px; font-family: 'Lato',Tahoma,sans-serif; font-size: 15px; line-height: 20px; color: #555555;">
+
+<a href="https://starmedia.ncm32.com/vtrack?clientid=71316&ul=VgAJCQFFAhoMVwcIXldyTF9VRxZVSx9UVl0fD0FEXg0DXAxcdkVRVBVHVREYWlZbGFkYTBgD&ml=WAUCDAkJAxpWRFBSAQADREsA&sl=I0hyRGxqTjUrbBoVRFNAVVJUXQMaV1JaCgIfAVdVSFI=&pp=0&fl=CUBFSEoDHUkRTxFIRFpXS0NRRkxXVlwZVEkeEUhXRhZNVA1WQlNYXQocBlMEDBYGAxtTAktBDVQCV0AcU1VXSghZHFdfX1cUFRUSCR1DR1FDHV0EGVRQWRRFXwtMXVBPAF0DS1IcTlAIRxkNU04UVFlHEg==&ext=&c=0000" style="color:#4a4a4a; text-decoration:none">
+
+<span class="category" style="font-size:12px;font-weight: 900; color: #b00; margin-right: 6px; text-transform: uppercase;">Football</span>
+
+<span style="display: block; margin: 0 0 10px !important;font-size: 22px !important;line-height: 27px !important;font-weight: bold !important;">
+Soccer-Amorim offers to quit if Man United board want new boss
+</span>
+<span style="font-size: 1em;line-height: 1.35em;margin-bottom: 0px;">
+BILBAO, Spain (Reuters) -Manchester United boss Ruben Amorim said that he was confident he was still the right man for the job after the club's woeful Europa League loss to Tottenham Hotspur, but would quit with no compensation if the club's board believed otherwise.
+</span>
+
+
+</a>
+</td>
+</tr>
+           </tbody>
+</table>
+</td>
+</tr>
+
+
+
+<tr>
+<td style="background-color: #ffffff;padding: 0 20px">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+<tbody>
+    <tr>
+<td style="padding: 15px 0 15px; font-family: 'Lato',Tahoma,sans-serif; font-size: 15px; line-height: 20px; color: #555555;border-top:1px solid #dfdfdf;">
+<a href="https://starmedia.ncm32.com/vtrack?clientid=71316&ul=VgAJCQFFAhoMVwcIXldyTF9VRxZVSx9UVl0fD0FEXg0DXAxcdkVRVBVHVREYWlZbGFkYTBgD&ml=WAUCDAkJAxpWRFBSAQAAREsA&sl=I0hyRGxqTjUrbBoVRFNAVVJUXQMaV1JaCgIfAVdVSFI=&pp=0&fl=CUBFSEoDHUkRTxFIRFpXS0NRRkxXVlwZVEkeA0tdVQwSXhdKGVBKVAddRA9DShRYU0MSH1YCUAJOAgceAAkXXARHQVFaWFAKAxUFDllcV0tSHUcKW0kcWE5eVBAVWVANEkYRFEVFS1AfHlAMUUoUWVhYGB0QXU9cCF5eHFFXV1NMVV9cFFxTEktMDgNd&ext=&c=0000" style="color:#4a4a4a; text-decoration:none">
+<span class="category" style="font-size:12px;font-weight: 900; color: #b00; margin-right: 6px; text-transform: uppercase;">AseanPlus News</span>
+<span style="display: block; margin: 0 0 10px !important;font-size: 22px !important;line-height: 27px !important;font-weight: bold !important;">
+Despicable Chinese shop owner adopts stray dogs only to kill, cook and eat them
+</span>
+<span style="font-size: 1em;line-height: 1.35em;margin:10px 0 0;">
+Woman pretends to offer canines loving home, slaughters them, then posts videos online of 'perfect' dish for 'rainy day with a drink'
+</span>
+</a>
+</td>
+</tr>
+</tbody>
+    </table>
+</td>
+</tr>
+
+
+
+<tr>
+<td style="background-color: #ffffff;padding: 0 20px">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+    <tbody>
+<tr>
+<td style="padding: 15px 0 15px; font-family: 'Lato',Tahoma,sans-serif; font-size: 15px; line-height: 20px; color: #555555;border-top:1px solid #dfdfdf;">
+<a href="https://starmedia.ncm32.com/vtrack?clientid=71316&ul=VgAJCQFFAhoMVwcIXldyTF9VRxZVSx9UVl0fD0FEXg0DXAxcdkVRVBVHVREYWlZbGFkYTBgD&ml=WAUCDAkJAxpWRFBSAQABREsA&sl=I0hyRGxqTjUrbBoVRFNAVVJUXQMaV1JaCgIfAVdVSFI=&pp=0&fl=CUBFSEoDHUkRTxFIRFpXS0NRRkxXVlwZVEkeAE1LXQwHQREWVERKWAhWRxAbV1xBRRtTAFYHTQdUHQADHUhNWg1dUhVbWFwNS0oPCFdBH1FZHUQQW19YQxRZX08JSQ==&ext=&c=0000" style="color:#4a4a4a; text-decoration:none">
+<span class="category" style="font-size:12px;font-weight: 900; color: #b00; margin-right: 6px; text-transform: uppercase;">Corporate News</span>
+<span style="display: block; margin: 0 0 10px !important;font-size: 22px !important;line-height: 27px !important;font-weight: bold !important;">
+Public Bank rings in profit in 1Q
+</span>
+<span style="font-size: 1em;line-height: 1.35em;margin:10px 0 0;">
+Public Bank Bhd, the nation's third-largest lender by asset size, remains confident in the positive outlook for the Malaysian economy, despite acknowledging that global growth will be increasingly susceptible to policy and political uncertainties.
+</span>
+</a>
+</td>
+</tr>
+</tbody>
+    </table>
+</td>
+</tr>
+
+
+
+                <tr>
+                    <td align="center" valign="top" style="font-size:0; padding: 0px; background-color: #ffffff;">
+                        
+                        <div style="display:inline-block; margin: 0 -1px; width:100%; min-width:200px; max-width:330px; vertical-align:top;"
+                            class="stack-column">
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                                <tbody>
+                                    <tr>
+                                        <td style="padding: 10px;">
+                                            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="font-size: 14px; text-align: left;">
+                                                <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            <a href="https://starmedia.ncm32.com/vtrack?clientid=71316&ul=VgAJCQFFAhoMVwcIXldyTF9VRxZVSx9UVl0fD0FEXg0DXAxcdkVRVBVHVREYWlZbGFkYTBgD&ml=WAUCDAkJAxpWRFBSAAQLREsA&sl=I0hyRGxqTjUrbBoVRFNAVVJUXQMaV1JaCgIfAVdVSFI=&pp=0&fl=CUBFSEoDHUkEURJIXEsdS1JWXhdaXG5DSlRQ&ext=&c=0000">
+                                                            <img src="https://d1l8l3rp33cdzs.cloudfront.net/images/starmediasmt/SEF25-June_TSDA.gif" width="300" height="" border="0" alt="alt_text" style="width: 100%; max-width: 300px; height: auto; background: #dddddd; font-family: sans-serif; font-size: 15px; line-height: 20px; color: #555555;" class="center-on-narrow">
+                                                           </a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div style="display:inline-block; margin: 0 -1px; width:100%; min-width:200px; max-width:330px; vertical-align:top;"
+                            class="stack-column">
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                                <tbody>
+                                    <tr>
+                                        <td style="padding: 10px;">
+                                            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="font-size: 14px;text-align: left;">
+                                                <tbody>
+                                                    <tr>
+                                                        <td>
+                                                           <a href="https://starmedia.ncm32.com/vtrack?clientid=71316&ul=VgAJCQFFAhoMVwcIXldyTF9VRxZVSx9UVl0fD0FEXg0DXAxcdkVRVBVHVREYWlZbGFkYTBgD&ml=WAUCDAkJAxpWRFJVBAYGREsA&sl=I0hyRGxqTjUrbBoVRFNAVVJUXQMaV1JaCgIfAVdVSFI=&pp=0&fl=CUBFSEoDHUkRTxFIRFpXS0NRRkxXVlwZVEkeEVlOUQZPUxBNX1JVVBUc&ext=dXRtX3NvdXJjZT10c29sJnV0bV9tZWRpdW09ZW1haWwmdXRtX2NhbXBhaWduPXRzb2xfYm9va21hcmsmdXRtX2NvbnRlbnQ9YmFubmVyMw==&c=0000">
+                                                            <img src="http://clips.thestar.com.my/adbanner/TSDN/20230522/Bookmark2023.gif" width="300" height="" border="0" alt="alt_text" style="width: 100%; max-width: 300px; height: auto; background: #dddddd; font-family: sans-serif; font-size: 15px; line-height: 20px; color: #555555;" class="center-on-narrow">
+                                                           </a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+ 	    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0px 20px 0; background-color: #ffffff;">
+                        <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
+                            <tbody>
+                                <tr>
+                                    <td colspan="100%" style="padding:0px 20px 20px; font-family: 'Lato',Tahoma,sans-serif; font-size:10px; line-height: 20px; color: #9b9b9b;text-align: center;font-weight: 400; border-bottom: 1px solid #dfdfdf;">
+                                        <span>ADVERTISEMENT</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                
+
+<tr>
+<td style="background-color: #ffffff;padding: 20px 20px 0;">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+    <tbody>
+<tr>
+<td style="padding: 0 0 20px; font-family: 'Lato',Tahoma,sans-serif; font-size: 15px; line-height: 20px; color: #555555;border-bottom: 1px solid #dfdfdf;">
+
+<a href="https://starmedia.ncm32.com/vtrack?clientid=71316&ul=VgAJCQFFAhoMVwcIXldyTF9VRxZVSx9UVl0fD0FEXg0DXAxcdkVRVBVHVREYWlZbGFkYTBgD&ml=WAUCDAkJAxpWRFBSAQAGREsA&sl=I0hyRGxqTjUrbBoVRFNAVVJUXQMaV1JaCgIfAVdVSFI=&pp=0&fl=CUBFSEoDHUkRTxFIRFpXS0NRRkxXVlwZVEkeDF1PR00MUxZQWV8WA1YBAUwGDBYEBhsEXRRdFVITW1xWH1lLXQBaHE9QTVpLFVUHFEQfUVdbXFUAW0tQQ1BfXw==&ext=&c=0000" style="color:#4a4a4a; text-decoration:none" target="_blank">
+<img src="https://apicms.thestar.com.my/uploads/images/2025/05/20/thumbs/large/3323641.jpg" width="680" height="" alt="Vandeweghe" border="0" style="width: 100%; max-width: 680px; height: auto; background: #dddddd; font-family: 'Lato',Tahoma,sans-serif; font-size: 15px; line-height: 15px; color: #555555; margin: 0 auto 5px;" class="fluid ncg-img">
+<span style="text-transform: uppercase;color: #aa1f1f;font-weight: 900;font-size:12px;margin-right: 6px;line-height: 20px">STARPICKS</span>
+<span style="margin: 0 0 10px; font-size: 25px; line-height: 30px; color: #4a4a4a; font-weight: 900;display: block;">EMPOWERING ASEAN WITH SMART COLLABORATION</span>
+<span style="margin: 0 0 10px;font-size: 16px; line-height: 21.6px;">THE 2025 Asean Leadership and Partnership Forum (ALPF) is set to promote economic co-operation, business collaboration and alliance between governments, businesses and civil society to advance sustainable and inclusive development.</span>
+</a>
+
+</td>
+</tr>
+</tbody>
+     </table>
+</td>
+</tr>
+
+
+<tr>
+<td style="background-color: #ffffff;padding: 0 20px">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+<tbody>
+    <tr>
+<td style="padding: 15px 20px 15px; font-family: 'Lato',Tahoma,sans-serif; font-size: 15px; line-height: 20px; color: #555555;">
+<a href="https://starmedia.ncm32.com/vtrack?clientid=71316&ul=VgAJCQFFAhoMVwcIXldyTF9VRxZVSx9UVl0fD0FEXg0DXAxcdkVRVBVHVREYWlZbGFkYTBgD&ml=WAUCDAkJAxpWRFBSAQAHREsA&sl=I0hyRGxqTjUrbBoVRFNAVVJUXQMaV1JaCgIfAVdVSFI=&pp=0&fl=CUBFSEoDHUkRTxFIRFpXS0NRRkxXVlwZVEkeA0tdVQwSXhdKGVBKVAddRA9DShRYU0MSH1YCUAJOAgceAAkXXghCVBVSXEtLElkNA1FFU0FEHVIQW1QcRFBeVgNIV0YHT0IPFFpQTkMDXVcGG05WWFFHTFMFUAtZBEYfQ1dLUE0HUl1d&ext=&c=0000" style="color:#4a4a4a; text-decoration:none">
+<span class="category" style="font-size:12px;font-weight: 900; color: #b00; margin-right: 6px; text-transform: uppercase;">Singapore</span>
+<span style="margin: 0;font-size: 21px;line-height: 26px;font-weight: bold; display: block">
+Five key takeaways from Singapore PM Lawrence Wongs Cabinet reshuffle
+</span>
+</a>
+</td>
+</tr>
+    </tbody>
+</table>
+</td>
+</tr>
+
+
+
+<tr>
+<td style="background-color: #ffffff;padding: 0 20px">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+    <tbody>
+<tr>
+<td style="padding: 15px 20px 15px; font-family: 'Lato',Tahoma,sans-serif; font-size: 15px; line-height: 20px; color: #555555;border-top:1px solid #dfdfdf;">
+<a href="https://starmedia.ncm32.com/vtrack?clientid=71316&ul=VgAJCQFFAhoMVwcIXldyTF9VRxZVSx9UVl0fD0FEXg0DXAxcdkVRVBVHVREYWlZbGFkYTBgD&ml=WAUCDAkJAxpWRFBSAQAEREsA&sl=I0hyRGxqTjUrbBoVRFNAVVJUXQMaV1JaCgIfAVdVSFI=&pp=0&fl=CUBFSEoDHUkRTxFIRFpXS0NRRkxXVlwZVEkeAE1LXQwHQREWVERKWAhWRxAbV1xBRRtTAFYHTQdUHQAAHVlVTwBNHE9YS1wVS1cAS1NdXExeXkEHUBRBRVZWWBYVSEYHEUEXS1McWFwPVxkXWUxeXhtWFEMNXAdEEh9XX0RRSlcPWVRWTQ==&ext=&c=0000" style="color:#4a4a4a; text-decoration:none"><span class="category" style="font-size:12px;font-weight: 900; color: #b00; margin-right: 6px; text-transform: uppercase;">Corporate News</span>
+<span style="margin: 0;font-size: 21px;line-height: 26px;font-weight: bold; display: block">
+Amway warns of continued profit pressure amid tough business environment
+</span>
+</a>
+</td>
+</tr>
+    </tbody>
+</table>
+</td>
+</tr>
+
+
+
+<tr>
+<td style="background-color: #ffffff;padding: 0 20px">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+    <tbody>
+<tr>
+<td style="padding: 15px 20px 15px; font-family: 'Lato',Tahoma,sans-serif; font-size: 15px; line-height: 20px; color: #555555;border-top:1px solid #dfdfdf;">
+<a href="https://starmedia.ncm32.com/vtrack?clientid=71316&ul=VgAJCQFFAhoMVwcIXldyTF9VRxZVSx9UVl0fD0FEXg0DXAxcdkVRVBVHVREYWlZbGFkYTBgD&ml=WAUCDAkJAxpWRFBSAQAFREsA&sl=I0hyRGxqTjUrbBoVRFNAVVJUXQMaV1JaCgIfAVdVSFI=&pp=0&fl=CUBFSEoDHUkRTxFIRFpXS0NRRkxXVlwZVEkeDF1PR00VXRBVUh4LAVQGG1MDFgsEGVIAUxBQDU9MRkBEX0gVVQBfVEsUX1MKFV1LBVxTW1VEHVsEGU5ZXk1VHAVdVlsBC1YHFF9fFEIJRkALG1hfRF9XAB0ARxBeD1UfQ1NVWUgJW0JZFFRXAxJRCAE=&ext=&c=0000" style="color:#4a4a4a; text-decoration:none"><span class="category" style="font-size:12px;font-weight: 900; color: #b00; margin-right: 6px; text-transform: uppercase;">World</span>
+<span style="margin: 0;font-size: 21px;line-height: 26px;font-weight: bold; display: block">
+Factbox-Trump makes false claims of white genocide in South Africa during Ramaphosa meeting
+</span>
+</a>
+</td>
+</tr>
+    </tbody>
+</table>
+</td>
+</tr>
+
+
+
+<tr>
+<td style="background-color: #ffffff;padding: 0 20px">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+    <tbody>
+<tr>
+<td style="padding: 15px 20px 15px; font-family: 'Lato',Tahoma,sans-serif; font-size: 15px; line-height: 20px; color: #555555;border-top:1px solid #dfdfdf;">
+<a href="https://starmedia.ncm32.com/vtrack?clientid=71316&ul=VgAJCQFFAhoMVwcIXldyTF9VRxZVSx9UVl0fD0FEXg0DXAxcdkVRVBVHVREYWlZbGFkYTBgD&ml=WAUCDAkJAxpWRFBSAQAKREsA&sl=I0hyRGxqTjUrbBoVRFNAVVJUXQMaV1JaCgIfAVdVSFI=&pp=0&fl=CUBFSEoDHUkRTxFIRFpXS0NRRkxXVlwZVEkeFl1bXE0WVwFRG19cRhUcBlMEDBYGAxtTAktdElIPU1scRlcVWQJFRFFLXB8MCVYfS1lEVwgECUdPXFhDU05RQwcVS0ADEEYXSRtYVhwWQVsHQ1pNRQ==&ext=&c=0000" style="color:#4a4a4a; text-decoration:none"><span class="category" style="font-size:12px;font-weight: 900; color: #b00; margin-right: 6px; text-transform: uppercase;">Technology</span>
+<span style="margin: 0;font-size: 21px;line-height: 26px;font-weight: bold; display: block">
+OpenAI buys iPhone designer Ive's hardware startup, names him creative head
+</span>
+</a>
+</td>
+</tr>
+    </tbody>
+</table>
+</td>
+</tr>
+
+
+
+<tr>
+<td style="background-color: #ffffff;padding: 0 20px">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+    <tbody>
+<tr>
+<td style="padding: 15px 20px 15px; font-family: 'Lato',Tahoma,sans-serif; font-size: 15px; line-height: 20px; color: #555555;border-top:1px solid #dfdfdf;">
+<a href="https://starmedia.ncm32.com/vtrack?clientid=71316&ul=VgAJCQFFAhoMVwcIXldyTF9VRxZVSx9UVl0fD0FEXg0DXAxcdkVRVBVHVREYWlZbGFkYTBgD&ml=WAUCDAkJAxpWRFBSAQALREsA&sl=I0hyRGxqTjUrbBoVRFNAVVJUXQMaV1JaCgIfAVdVSFI=&pp=0&fl=CUBFSEoDHUkRTxFIRFpXS0NRRkxXVlwZVEkeFl1bXE0WVwFRG19cRhUcBlMEDBYGAxtTAktQC0MCXVtfH0pRSwRHHExWFFwDERUUA1NdQFwaWF0FXBRUVFVZQRFdSxkIA1wXWERIFEUJQw==&ext=&c=0000" style="color:#4a4a4a; text-decoration:none"><span class="category" style="font-size:12px;font-weight: 900; color: #b00; margin-right: 6px; text-transform: uppercase;">Technology</span>
+<span style="margin: 0;font-size: 21px;line-height: 26px;font-weight: bold; display: block">
+Bitcoin rises to new record high, eclipses January top
+</span>
+</a>
+</td>
+</tr>
+    </tbody>
+</table>
+</td>
+</tr>
+
+
+
+
+
+
+
+<tr>
+<td style="background-color: #ffffff;padding: 20px 20px 0;">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+    <tbody>
+<tr>
+<td style="padding: 0 0 20px; font-family: 'Lato',Tahoma,sans-serif; font-size: 15px; line-height: 20px; color: #555555;border-bottom: 1px solid #dfdfdf;">
+<a href="https://starmedia.ncm32.com/vtrack?clientid=71316&ul=VgAJCQFFAhoMVwcIXldyTF9VRxZVSx9UVl0fD0FEXg0DXAxcdkVRVBVHVREYWlZbGFkYTBgD&ml=WAUCDAkJAxpWRFBSAQECREsA&sl=I0hyRGxqTjUrbBoVRFNAVVJUXQMaV1JaCgIfAVdVSFI=&pp=0&fl=CUBFSEoDHUkRTxFIRFpXS0NRRkxXVlwZVEkeDF1PR00VXRBVUh4LAVQGG1MDFgsEGUATRQlCT1QAXl5CH1BRS0xbRlYUX10UA1EBCB1TW1waU0EWRxRQQxRFQgNRXBlSUQsGXEBQSkUHR10NUQkKDw==&ext=&c=0000" style="color:#4a4a4a; text-decoration:none">
+<img src="https://apicms.thestar.com.my/uploads/images/2025/05/22/thumbs/large/3327811.jpg" width="680" height="" alt="Messi" border="0" style="width: 100%; max-width: 680px; height: auto; background: #dddddd; font-family: 'Lato',Tahoma,sans-serif; font-size: 15px; line-height: 15px; color: #555555; margin: 0 auto 5px;" class="fluid ncg-img">
+
+<span style="text-transform: uppercase;color: #aa1f1f;font-weight: 900;font-size:12px;margin-right: 6px;line-height: 20px">World</span>
+<span style="margin: 0 0 10px; font-size: 22px; line-height: 28px; color: #333333; font-weight: 900; display: block;">Trump calls his own foreign aid cuts at USAID 'devastating'
+</span>
+</a>
+
+</td>
+</tr>
+    </tbody>
+</table>
+</td>
+</tr>
+
+
+
+
+<tr>
+<td aria-hidden="true" height="40" style="font-size: 0px; line-height: 0px;">
+&nbsp;
+</td>
+</tr>
+
+
+
+
+
+
+    </tbody>
+</table>
+
+<table>
+    <tbody>
+<tr><td style="background-color: #ffffff; padding:0 20px 0 20px;">
+<span style="font-family: 'Lato',Tahoma,sans-serif; margin: 0 0 10px; font-size: 22px; line-height: 28px; color: #333333; font-weight: 900; display: block;"></span>
+<img alt="Covid-19" border="0" class="fluid ncg-img" height="" src="https://cdn.thestar.com.my/Themes/img/dailyalert_bottom_poster.jpg" style="width: 100%; max-width: 680px; height: auto; background: #dddddd; font-family: 'Lato',Tahoma,sans-serif; font-size: 15px; line-height: 15px; color: #555555; margin: 0 auto 5px;" width="680">
+</td></tr>
+    </tbody>
+</table>
+
+
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width: 680px;">
+    <tbody>
+<tr>
+<td style="padding: 20px; font-family: 'Lato',Tahoma,sans-serif; font-size: 12px; line-height: 15px; text-align: center; color: #888888;">
+<img src="https://cdn.thestar.com.my/Themes/img/DailyAlert_header_footer_logo.png" width="150" height="50" alt="The Star" border="0" style="display: block; height: auto; background: #ffffff;margin-bottom: 5px;margin: auto;">
+<hr style="border: 2px solid #b00;width: 50px;margin: 25px auto;background-color: #b00;">
+<ul style="list-style: none;padding: 0;">
+<li style="display: inline-block;font-weight: 400;">
+<a href="https://starmedia.ncm32.com/vtrack?clientid=71316&ul=VgAJCQFFAhoMVwcIXldyTF9VRxZVSx9UVl0fD0FEXg0DXAxcdkVRVBVHVREYWlZbGFkYTBgD&ml=WAUCDAkJAxpWRFJXCANORAc=&sl=I0hyRGxqTjUrbBoVRFNAVVJUXQMaV1JaCgIfAVdVSFI=&pp=0&fl=CUBFSEoDHUkVURIDQxxGUFJDQANGF1JYVB5cGxdMRw0OXAdORV1cRRJWRkxDV0pDVEcCQg1QBxkAQUJJ&ext=&c=0000" style="color:#333 !important;font-family='Lato',Tahoma, sans-serif;font-weight: 900;font-size: 12px; padding: 0 7px;">Unsubscribe</a>
+</li>
+<li style="display: inline-block;">
+<a href="https://starmedia.ncm32.com/vtrack?clientid=71316&ul=VgAJCQFFAhoMVwcIXldyTF9VRxZVSx9UVl0fD0FEXg0DXAxcdkVRVBVHVREYWlZbGFkYTBgD&ml=WAUCDAkJAxpWRFdfBU5OCA==&sl=I0hyRGxqTjUrbBoVRFNAVVJUXQMaV1JaCgIfAVdVSFI=&pp=0&fl=CUBFSEoDHUkRTxFIRFpXS0NRRkxXVlwZVEkeNl1KWRFN&ext=&c=0000" style="color:#333 !important;font-family='Lato',Tahoma, sans-serif;font-weight: 900;font-size: 12px;padding: 0 7px;">Terms</a>
+</li>
+<li style="display: inline-block;">
+<a href="https://starmedia.ncm32.com/vtrack?clientid=71316&ul=VgAJCQFFAhoMVwcIXldyTF9VRxZVSx9UVl0fD0FEXg0DXAxcdkVRVBVHVREYWlZbGFkYTBgD&ml=WAUCDAkJAxpWRFdfBk5OCA==&sl=I0hyRGxqTjUrbBoVRFNAVVJUXQMaV1JaCgIfAVdVSFI=&pp=0&fl=CUBFSEoDHUkRTxFIRFpXS0NRRkxXVlwZVEkeMkpRQgMBS00=&ext=&c=0000" style="color:#333 !important;font-family='Lato',Tahoma, sans-serif;font-weight: 900;font-size: 12px;padding: 0 7px;">Privacy</a>
+</li>
+<li style="display: inline-block;">
+<a href="https://starmedia.ncm32.com/vtrack?clientid=71316&ul=VgAJCQFFAhoMVwcIXldyTF9VRxZVSx9UVl0fD0FEXg0DXAxcdkVRVBVHVREYWlZbGFkYTBgD&ml=WAUCDAkJAxpWRFdfB05OCA==&sl=I0hyRGxqTjUrbBoVRFNAVVJUXQMaV1JaCgIfAVdVSFI=&pp=0&fl=CUBFSEoDHUkRTxFIRFpXS0NRRkxXVlwZVEkeIVdWQAMBRjdKGQ==&ext=&c=0000" style="color:#333 !important;font-family='Lato',Tahoma, sans-serif;font-weight: 900;font-size: 12px;padding: 0 7px;">Contact Us</a>
+</li>
+</ul>
+<span style="font-size: 11px;">Copyright &copy; 1995-2023 Star Media Group Berhad [197101000523 (10894-D)] </span>
+</td>
+</tr>
+    </tbody>
+</table>
+
+
+
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width: 680px;background-color:#eff1f0">
+    <tbody>
+<tr>
+<td style="padding: 25px 20px; font-family: 'Lato',Tahoma,sans-serif; font-size: 12px; line-height: 15px; text-align: center; color: #888888;">
+<a href="https://starmedia.ncm32.com/vtrack?clientid=71316&ul=VgAJCQFFAhoMVwcIXldyTF9VRxZVSx9UVl0fD0FEXg0DXAxcdkVRVBVHVREYWlZbGFkYTBgD&ml=WAUCDAkJAxpWRFdfCE5OCA==&sl=I0hyRGxqTjUrbBoVRFNAVVJUXQMaV1JaCgIfAVdVSFI=&pp=0&fl=CUBFSEoDHUkRTxFIVlNRXVVfWwkaWl5aFmRZB2tMVRAtXA5QWFQ=&ext=&c=0000" style="display: inline-block;"><img src="https://cdn.thestar.com.my/Themes/img/DailyAlert_fb-icon.png" width="26" height="26" alt="Facebook" border="0" style="display: inline-block; height: auto; margin: 0 7px;"></a>
+<a href="https://starmedia.ncm32.com/vtrack?clientid=71316&ul=VgAJCQFFAhoMVwcIXldyTF9VRxZVSx9UVl0fD0FEXg0DXAxcdkVRVBVHVREYWlZbGFkYTBgD&ml=WAUCDAkJAxpWRFdfCU5OCA==&sl=I0hyRGxqTjUrbBoVRFNAVVJUXQMaV1JaCgIfAVdVSFI=&pp=0&fl=CUBFSEoDHUkSTw8SRFdAFlRfWU1HTVBFVl5dC1Zd&ext=&c=0000" style="display: inline-block;"><img src="https://cdn.thestar.com.my/Themes/img/DailyAlert_twitter-icon.png" width="26" height="26" alt="Twitter" border="0" style="display: inline-block; height: auto;margin: 0 7px ;"></a>
+<span style="font-size: 11px;text-transform: uppercase; font-weight: 900; color: #333; font-family:'Lato',Tahoma, sans-serif;display: block; margin-top:25px; ">Download the Star Mobile App</span>
+<a href="https://starmedia.ncm32.com/vtrack?clientid=71316&ul=VgAJCQFFAhoMVwcIXldyTF9VRxZVSx9UVl0fD0FEXg0DXAxcdkVRVBVHVREYWlZbGFkYTBgD&ml=WAUCDAkJAxpWRFRWAE5OCA==&sl=I0hyRGxqTjUrbBoVRFNAVVJUXQMaV1JaCgIfAVdVSFI=&pp=0&fl=CUBFSEoDHUkPTBMIVUEcWUdAWAcaWl5aFlFBEhdMXAdPQRZYRBxUXgRaWAYZUF0CBAxQCFADVQE=&ext=bXQ9OA==&c=0000" style="display: inline-block;"><img src="https://cdn.thestar.com.my/Themes/img/DailyAlert_app-store.png" alt="Apple App Store" border="0" style="display: inline-block; height: auto; background: #ffffff;margin: 5px 3px;"></a>
+<a href="https://starmedia.ncm32.com/vtrack?clientid=71316&ul=VgAJCQFFAhoMVwcIXldyTF9VRxZVSx9UVl0fD0FEXg0DXAxcdkVRVBVHVREYWlZbGFkYTBgD&ml=WAUCDAkJAxpWRFIaTAI=&sl=I0hyRGxqTjUrbBoVRFNAVVJUXQMaV1JaCgIfAVdVSFI=&pp=0&fl=CUBFSEoDHUkWVAcfHlVdV1BcUUxXVlwYSkReEF0XVRISQU1dU0VYWApA&ext=aWQ9Y29tLmtueC50aGVzdGFybW9iaWxl&c=0000" style="display: inline-block;"><img src="https://cdn.thestar.com.my/Themes/img/DailyAlert_google-play.png" alt="Google Play Store" border="0" style="display: inline-block; height: auto; background: #ffffff;margin: 5px 3px;"></a>
+
+<span style="display: block;font-size: 11px;text-transform: uppercase; font-weight: 900; color: #333; font-family:'Lato',Tahoma, sans-serif;margin-top: 15px;margin-bottom:5px; ">Subscriptions</span>
+<a href="https://starmedia.ncm32.com/vtrack?clientid=71316&ul=VgAJCQFFAhoMVwcIXldyTF9VRxZVSx9UVl0fD0FEXg0DXAxcdkVRVBVHVREYWlZbGFkYTBgD&ml=WAUCDAkJAxpWRFBVBAJORAc=&sl=I0hyRGxqTjUrbBoVRFNAVVJUXQMaV1JaCgIfAVdVSFI=&pp=0&fl=CUBFSEoDHUkRTxFIRFpXS0NRRkxXVlwZVEkeEU1aRwEQWwBc&ext=&c=0000" style="display: inline-block;"><span style="font-size: 12px;  color: #000; font-family:arial; font-weight: 400;">The Star Digital Access</span></a>
+</td>
+</tr>
+    </tbody>
+</table>
+
+
+
+</div>
+
+
+
+</center>
+</body>
+
+</html>
+
+
