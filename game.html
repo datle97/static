@@ -470,12 +470,7 @@ html { font-size: 16px; }
 
       <div class="turns-display">
         <div class="turns-label">Luot con lai</div>
-        <div class="turns-count" id="turns-dots">
-          <span class="turn-dot active">&#127919;</span>
-          <span class="turn-dot active">&#127919;</span>
-          <span class="turn-dot active">&#127919;</span>
-        </div>
-        <div class="turns-number"><span id="turns-count">3</span>/3</div>
+        <div class="turns-number"><span id="turns-count">0</span></div>
       </div>
 
       <div class="header-actions">
@@ -658,9 +653,13 @@ html { font-size: 16px; }
 (function() {
   'use strict';
 
+  // ============ TEST FLAG ============
+  // Set to true to skip auth flow and use hardcoded token
+  var TEST_ACCESS_TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwb3J0YWxJZCI6NTY0ODkyNDU3LCJ6YWxvVWlkIjoiNTQzNzM1NDE0ODQ0NTA1MjUyMCIsInBob25lIjoiODQ5NDIxNTI1NzciLCJuYW1lIjoiRGF0IiwiY3VzdG9tZXJJZCI6IjY0MjY4OSIsImlhdCI6MTc2MjQyMTUzNywiZXhwIjozNzYyNDI4NzM3fQ.YRmD523Ho8hHNV7O_2Zf0dmqEorFM6l_1eaQpuqNd9Y'; // Add your token here
+
   // ============ GET INJECTED DEPENDENCIES ============
   var ZMA = window.ZMA || {};
-  var Howl = ZMA.Howl;
+  var Howl = ZMA.Howl || window.Howl;
   var Sentry = ZMA.Sentry || { captureMessage: function(){}, captureException: function(){} };
   var config = ZMA.config || {};
   var appSettings = config.appSettings || {};
@@ -669,6 +668,9 @@ html { font-size: 16px; }
   var API_BASE = 'https://sandbox-api-zma.antsomi.com/api';
   var API_PREFIX = '/zma/phuc-long';
 
+  console.log('[CardFlip] Howl available:', !!Howl);
+  console.log('[CardFlip] ZMA:', ZMA);
+
   // ============ AUDIO SETUP ============
   var bgMusic = null;
   var clickSound = null;
@@ -676,27 +678,39 @@ html { font-size: 16px; }
 
   function initAudio() {
     try {
-      if (!Howl) return;
+      console.log('[CardFlip] initAudio called, Howl:', Howl);
+      if (!Howl) {
+        console.warn('[CardFlip] Howl not available, skipping audio init');
+        return;
+      }
 
       bgMusic = new Howl({
         src: ['https://assets.mixkit.co/music/preview/mixkit-games-worldbeat-466.mp3'],
         loop: true,
         volume: 0.3,
         html5: true,
+        onload: function() { console.log('[CardFlip] bgMusic loaded'); },
+        onloaderror: function(id, err) { console.error('[CardFlip] bgMusic load error:', err); }
       });
 
       clickSound = new Howl({
         src: ['https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3'],
         volume: 0.5,
+        onload: function() { console.log('[CardFlip] clickSound loaded'); },
+        onloaderror: function(id, err) { console.error('[CardFlip] clickSound load error:', err); }
       });
 
       winSound = new Howl({
         src: ['https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3'],
         volume: 0.6,
+        onload: function() { console.log('[CardFlip] winSound loaded'); },
+        onloaderror: function(id, err) { console.error('[CardFlip] winSound load error:', err); }
       });
 
+      console.log('[CardFlip] Audio initialized successfully');
       Sentry.captureMessage('[CardFlip] Audio initialized', { level: 'info' });
     } catch (err) {
+      console.error('[CardFlip] initAudio error:', err);
       Sentry.captureException(err);
     }
   }
@@ -724,7 +738,6 @@ html { font-size: 16px; }
     accessToken: null,
     user: null,
     turns: 0,
-    maxTurns: 3,
     allocatedVoucher: null,
     currentReward: null,
     isFlipping: false
@@ -794,21 +807,11 @@ html { font-size: 16px; }
     });
   }
 
-  function updateTurnsDisplay(turns, maxTurns) {
-    maxTurns = maxTurns || gameState.maxTurns || 3;
-    var dotsEl = document.getElementById('turns-dots');
+  function updateTurnsDisplay(turns) {
     var countEl = document.getElementById('turns-count');
     var noTurnsEl = document.getElementById('no-turns-message');
 
-    if (dotsEl) {
-      var dots = [];
-      for (var i = 0; i < maxTurns; i++) {
-        var isActive = i < turns;
-        dots.push('<span class="turn-dot ' + (isActive ? 'active' : 'used') + '">' + (isActive ? '&#127919;' : '&#9898;') + '</span>');
-      }
-      dotsEl.innerHTML = dots.join('');
-    }
-    if (countEl) countEl.textContent = turns + '/' + maxTurns;
+    if (countEl) countEl.textContent = turns;
     if (noTurnsEl) noTurnsEl.classList.toggle('hidden', turns > 0);
   }
 
@@ -863,6 +866,36 @@ html { font-size: 16px; }
   // 4. Use internal accessToken for all subsequent API calls
   function authenticate() {
     Sentry.captureMessage('[CardFlip] Starting auth flow', { level: 'info' });
+
+    // TEST MODE: Skip auth flow, use hardcoded token
+    if (TEST_ACCESS_TOKEN) {
+      console.log('[CardFlip] TEST MODE - skipping auth flow');
+      gameState.accessToken = TEST_ACCESS_TOKEN;
+      gameState.user = { id: 'test', name: 'Test User', tier: 'Member', points: 0 };
+
+      // Still check remaining plays
+      checkCanPlay().then(function(canPlayResult) {
+        console.log('[CardFlip] Can play result:', canPlayResult);
+        if (canPlayResult.code === 200) {
+          var data = canPlayResult.data || {};
+          gameState.turns = Math.max(0, data.remainPlays || 0);
+        } else {
+          gameState.turns = 3; // Default for test
+        }
+        updateUserDisplay(gameState.user);
+        updateTurnsDisplay(gameState.turns);
+        showState('game-state');
+        playBgMusic();
+      }).catch(function(err) {
+        console.error('[CardFlip] Test mode checkCanPlay error:', err);
+        gameState.turns = 3;
+        updateUserDisplay(gameState.user);
+        updateTurnsDisplay(gameState.turns);
+        showState('game-state');
+        playBgMusic();
+      });
+      return;
+    }
 
     var zaloToken = null;
     var phoneToken = null;
@@ -939,12 +972,8 @@ html { font-size: 16px; }
       }
 
       var data = canPlayResult.data || {};
-      // remainPlays or calculate from redemptionCount
-      var remainPlays = data.remainPlays;
-      if (remainPlays === undefined && data.redemptionCount !== undefined) {
-        remainPlays = gameState.maxTurns - data.redemptionCount;
-      }
-      gameState.turns = Math.max(0, remainPlays || 0);
+      // remainPlays from API response
+      gameState.turns = Math.max(0, data.remainPlays || 0);
 
       Sentry.captureMessage('[CardFlip] Auth success', {
         level: 'info',
@@ -953,7 +982,7 @@ html { font-size: 16px; }
 
       // Step 8: Update UI
       updateUserDisplay(gameState.user);
-      updateTurnsDisplay(gameState.turns, gameState.maxTurns);
+      updateTurnsDisplay(gameState.turns);
 
       // Step 9: Show game & play music
       showState('game-state');
@@ -1014,7 +1043,7 @@ html { font-size: 16px; }
 
       // Update turns
       gameState.turns = Math.max(0, gameState.turns - 1);
-      updateTurnsDisplay(gameState.turns, gameState.maxTurns);
+      updateTurnsDisplay(gameState.turns);
 
       // Save allocated voucher
       gameState.allocatedVoucher = voucherData;
