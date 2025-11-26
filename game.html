@@ -653,16 +653,16 @@ html { font-size: 16px; }
 (function() {
   'use strict';
 
-  // ============ TEST FLAG ============
-  // Set to true to skip auth flow and use hardcoded token
-  var TEST_ACCESS_TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwb3J0YWxJZCI6NTY0ODkyNDU3LCJ6YWxvVWlkIjoiNTQzNzM1NDE0ODQ0NTA1MjUyMCIsInBob25lIjoiODQ5NDIxNTI1NzciLCJuYW1lIjoiRGF0IiwiY3VzdG9tZXJJZCI6IjY0MjY4OSIsImlhdCI6MTc2MjQyMTUzNywiZXhwIjozNzYyNDI4NzM3fQ.YRmD523Ho8hHNV7O_2Zf0dmqEorFM6l_1eaQpuqNd9Y'; // Add your token here
-
   // ============ GET INJECTED DEPENDENCIES ============
   var ZMA = window.ZMA || {};
   var Howl = ZMA.Howl || window.Howl;
   var Sentry = ZMA.Sentry || { captureMessage: function(){}, captureException: function(){} };
   var config = ZMA.config || {};
   var appSettings = config.appSettings || {};
+
+  // ============ TEST FLAG ============
+  // Pass testAccessToken via window.ZMA.config to skip auth flow
+  var TEST_ACCESS_TOKEN = config.testAccessToken || '';
 
   // ============ API CONFIG ============
   var API_BASE = 'https://sandbox-api-zma.antsomi.com/api';
