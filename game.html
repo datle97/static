@@ -1,0 +1,1137 @@
+<style>
+/* ===== CSS Reset & Variables ===== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* Colors */
+  --color-primary: #c41e3a;
+  --color-primary-dark: #8b0000;
+  --color-secondary: #ffd700;
+  --color-secondary-dark: #daa520;
+  --color-accent: #ff6b6b;
+  --color-bg-start: #1a0a0a;
+  --color-bg-end: #2d0a0a;
+  --color-card-front: linear-gradient(145deg, #c41e3a, #8b0000);
+  --color-card-back: linear-gradient(145deg, #ffd700, #daa520);
+  --color-text-light: #fff;
+  --color-text-dark: #1a0a0a;
+  --color-overlay: rgba(0, 0, 0, 0.8);
+
+  /* Shadows */
+  --shadow-card: 0 10px 30px rgba(0, 0, 0, 0.4);
+  --shadow-card-hover: 0 15px 40px rgba(196, 30, 58, 0.4);
+  --shadow-glow: 0 0 20px rgba(255, 215, 0, 0.5);
+  --shadow-modal: 0 25px 50px rgba(0, 0, 0, 0.5);
+
+  /* Sizes */
+  --card-width: 120px;
+  --card-height: 160px;
+  --border-radius: 12px;
+
+  /* Transitions */
+  --transition-flip: 0.6s;
+  --transition-hover: 0.3s;
+}
+
+/* ===== Utility Classes ===== */
+.hidden { display: none !important; }
+.state-container { width: 100%; min-height: 100vh; }
+
+/* ===== Base Styles ===== */
+html { font-size: 16px; }
+
+.card-flip-game {
+  font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  min-height: 100vh;
+  color: var(--color-text-light);
+  overflow-x: hidden;
+}
+
+/* ===== App Container ===== */
+.game-app {
+  min-height: 100vh;
+  max-width: 600px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  padding-top: calc(20px + var(--zaui-safe-area-inset-top, 0px));
+}
+
+/* ===== Loading ===== */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  gap: 20px;
+}
+.loading-spinner { animation: bounce 1s ease-in-out infinite; }
+.spinner-card { font-size: 4rem; animation: spin 2s linear infinite; }
+@keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+@keyframes spin { 0% { transform: rotateY(0deg); } 100% { transform: rotateY(360deg); } }
+.loading-text { font-size: 1.2rem; color: var(--color-secondary); animation: pulse 1.5s ease-in-out infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+/* ===== Error Container ===== */
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  gap: 20px;
+  text-align: center;
+  padding: 20px;
+}
+.error-message { font-size: 1.2rem; color: var(--color-accent); }
+.error-icon { font-size: 4rem; margin-bottom: 15px; }
+.error-actions { display: flex; flex-direction: column; align-items: center; gap: 15px; }
+.retry-btn {
+  padding: 12px 30px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-dark);
+  background: var(--color-secondary);
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: transform var(--transition-hover), box-shadow var(--transition-hover);
+}
+.retry-btn:hover { transform: scale(1.05); box-shadow: var(--shadow-glow); }
+
+/* ===== Game Container ===== */
+.game-container {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+/* ===== Header ===== */
+.game-header {
+  width: 100%;
+  text-align: center;
+  padding: 20px;
+  background: linear-gradient(135deg, rgba(196, 30, 58, 0.2), rgba(139, 0, 0, 0.2));
+  border-radius: var(--border-radius);
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  position: relative;
+}
+.header-content { margin-bottom: 15px; }
+.game-title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--color-secondary);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.title-icon { font-size: 2.5rem; animation: wiggle 2s ease-in-out infinite; }
+@keyframes wiggle { 0%, 100% { transform: rotate(-5deg); } 50% { transform: rotate(5deg); } }
+.game-subtitle { font-size: 1rem; color: rgba(255, 255, 255, 0.8); margin-top: 5px; }
+.turns-display { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.turns-label { font-size: 0.9rem; color: rgba(255, 255, 255, 0.7); text-transform: uppercase; letter-spacing: 1px; }
+.turns-count { display: flex; gap: 10px; }
+.turn-dot { font-size: 1.5rem; transition: transform var(--transition-hover); }
+.turn-dot.active { animation: glow 1.5s ease-in-out infinite; }
+.turn-dot.used { opacity: 0.4; }
+@keyframes glow { 0%, 100% { filter: brightness(1); } 50% { filter: brightness(1.3); } }
+.turns-number { font-size: 1.2rem; font-weight: 700; color: var(--color-secondary); }
+.header-actions { position: absolute; top: 10px; right: 10px; display: flex; gap: 8px; }
+.reset-btn, .logout-btn {
+  width: 36px;
+  height: 36px;
+  font-size: 1.2rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all var(--transition-hover);
+}
+.reset-btn:hover { background: rgba(255, 255, 255, 0.2); transform: rotate(180deg); }
+.logout-btn { background: rgba(255, 107, 107, 0.2); border-color: rgba(255, 107, 107, 0.3); }
+.logout-btn:hover { background: rgba(255, 107, 107, 0.4); }
+
+/* ===== User Welcome ===== */
+.user-welcome {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px 20px;
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 215, 0, 0.05));
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  border-radius: var(--border-radius);
+  margin: 20px 0;
+  width: 100%;
+}
+.user-avatar {
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, var(--color-secondary), var(--color-secondary-dark));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.avatar-icon { font-size: 1.5rem; }
+.user-info { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+.user-name { font-size: 1rem; color: var(--color-text-light); }
+.user-name strong { color: var(--color-secondary); }
+.user-tier { font-size: 0.8rem; padding: 2px 8px; border-radius: 4px; width: fit-content; }
+.tier-gold { background: linear-gradient(135deg, #ffd700, #daa520); color: var(--color-text-dark); }
+.user-points { text-align: right; display: flex; flex-direction: column; gap: 2px; }
+.points-label { font-size: 0.75rem; color: rgba(255, 255, 255, 0.6); text-transform: uppercase; }
+.points-value { font-size: 1.2rem; font-weight: 700; color: var(--color-secondary); }
+
+/* ===== Game Board ===== */
+.game-board {
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(3, var(--card-width));
+  gap: 15px;
+  padding: 20px;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.1));
+  border-radius: calc(var(--border-radius) + 8px);
+  border: 2px solid rgba(255, 215, 0, 0.3);
+  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.3);
+}
+
+/* ===== Card Styles ===== */
+.card { width: var(--card-width); height: var(--card-height); perspective: 1000px; cursor: pointer; position: relative; }
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform var(--transition-flip);
+  transform-style: preserve-3d;
+}
+.card:hover:not(.flipped):not(.flipping) .card-inner { transform: scale(1.05) rotateY(10deg); }
+.card:hover:not(.flipped):not(.flipping) { z-index: 10; }
+.card.flipped .card-inner { transform: rotateY(180deg); }
+.card.flipping .card-inner { animation: shake 0.5s ease-in-out; }
+@keyframes shake { 0%, 100% { transform: rotateY(0) scale(1); } 25% { transform: rotateY(-15deg) scale(1.05); } 75% { transform: rotateY(15deg) scale(1.05); } }
+
+/* Card Loading Overlay */
+.card-loading {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: var(--border-radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s, visibility 0.2s;
+}
+.card.flipping .card-loading {
+  opacity: 1;
+  visibility: visible;
+}
+.card-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid rgba(255, 215, 0, 0.3);
+  border-top-color: var(--color-secondary);
+  border-radius: 50%;
+  animation: card-spin 0.8s linear infinite;
+}
+@keyframes card-spin {
+  to { transform: rotate(360deg); }
+}
+
+.card-front,
+.card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border-radius: var(--border-radius);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+/* Card Front */
+.card-front { background: var(--color-card-front); border: 3px solid var(--color-secondary); }
+.card-front::before {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  border: 2px dashed rgba(255, 215, 0, 0.4);
+  border-radius: 8px;
+  pointer-events: none;
+}
+.card-front::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  animation: shine 3s linear infinite;
+}
+@keyframes shine { 0% { transform: translateX(-100%) rotate(45deg); } 100% { transform: translateX(100%) rotate(45deg); } }
+.card-icon { font-size: 3rem; color: var(--color-secondary); text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); z-index: 1; }
+.card-number { position: absolute; bottom: 8px; font-size: 0.8rem; font-weight: 600; color: rgba(255, 215, 0, 0.6); z-index: 1; }
+
+/* Card Back */
+.card-back { background: var(--color-card-back); border: 3px solid var(--color-primary); transform: rotateY(180deg); }
+.card-back::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+  pointer-events: none;
+}
+.reward-text {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--color-text-dark);
+  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
+  padding: 10px;
+  text-align: center;
+  z-index: 1;
+}
+
+/* ===== Instructions ===== */
+.game-instructions { text-align: center; padding: 15px; color: rgba(255, 255, 255, 0.7); font-size: 0.95rem; }
+.no-turns-message { color: var(--color-accent); font-weight: 600; margin-top: 10px; }
+
+/* ===== Modal ===== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--color-overlay);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-out;
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.modal-content {
+  background: linear-gradient(135deg, #2d1f1f, #1a0a0a);
+  border: 3px solid var(--color-secondary);
+  border-radius: calc(var(--border-radius) + 8px);
+  padding: 40px;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  position: relative;
+  box-shadow: var(--shadow-modal), 0 0 40px rgba(255, 215, 0, 0.2);
+  animation: slideUp 0.4s ease-out;
+}
+@keyframes slideUp { from { opacity: 0; transform: translateY(50px) scale(0.9); } to { opacity: 1; transform: translateY(0) scale(1); } }
+.modal-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 32px;
+  height: 32px;
+  font-size: 1.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  color: var(--color-text-light);
+  cursor: pointer;
+  transition: all var(--transition-hover);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+.modal-close:hover { background: rgba(255, 255, 255, 0.2); transform: rotate(90deg); }
+.modal-icon { font-size: 4rem; margin-bottom: 15px; }
+.modal-icon .confetti { animation: bounce 0.6s ease-in-out infinite; display: inline-block; }
+.modal-title { font-size: 1.8rem; font-weight: 700; color: var(--color-secondary); margin-bottom: 20px; }
+.reward-display {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 215, 0, 0.1));
+  border: 2px solid rgba(255, 215, 0, 0.4);
+  border-radius: var(--border-radius);
+  padding: 20px;
+  margin-bottom: 25px;
+}
+.reward-label { display: block; font-size: 0.9rem; color: rgba(255, 255, 255, 0.7); margin-bottom: 8px; }
+.reward-value { display: block; font-size: 2rem; font-weight: 800; color: var(--color-secondary); text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); }
+.modal-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+/* ===== Buttons ===== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: inherit;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: all var(--transition-hover);
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--color-secondary), var(--color-secondary-dark));
+  color: var(--color-text-dark);
+  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4); }
+.btn-secondary {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+  color: var(--color-text-light);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+.btn-secondary:hover { background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.2)); transform: translateY(-2px); }
+.btn-icon { font-size: 1.2rem; }
+
+/* ===== Responsive ===== */
+@media (max-width: 480px) {
+  :root { --card-width: 90px; --card-height: 120px; }
+  .game-title { font-size: 1.5rem; }
+  .title-icon { font-size: 2rem; }
+  .card-icon { font-size: 2rem; }
+  .reward-text { font-size: 1rem; }
+  .game-board { gap: 10px; padding: 15px; }
+  .modal-content { padding: 25px; }
+  .modal-title { font-size: 1.4rem; }
+  .reward-value { font-size: 1.5rem; }
+  .btn { padding: 10px 18px; font-size: 0.9rem; }
+  .user-welcome { flex-wrap: wrap; gap: 10px; padding: 12px 15px; }
+  .user-avatar { width: 40px; height: 40px; }
+  .avatar-icon { font-size: 1.2rem; }
+  .user-name { font-size: 0.9rem; }
+  .points-value { font-size: 1rem; }
+}
+
+@media (max-width: 360px) {
+  :root { --card-width: 75px; --card-height: 100px; }
+  .game-board { gap: 8px; padding: 12px; }
+}
+</style>
+
+<div class="card-flip-game">
+<div class="game-app" id="game-app">
+
+  <!-- ========== LOADING STATE ========== -->
+  <div id="loading-state" class="state-container">
+    <div class="loading-container">
+      <div class="loading-spinner"></div>
+      <p class="loading-text">Dang tai...</p>
+    </div>
+  </div>
+
+  <!-- ========== ERROR STATE ========== -->
+  <div id="error-state" class="state-container hidden">
+    <div class="error-container">
+      <div class="error-icon" id="error-icon">&#128274;</div>
+      <p class="error-message" id="error-message">Vui long dang nhap de choi game!</p>
+      <div class="error-actions">
+        <button class="retry-btn" onclick="window.Game.retry()">
+          Thu lai
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== GAME STATE ========== -->
+  <div id="game-state" class="state-container hidden">
+
+    <!-- Header -->
+    <header class="game-header">
+      <div class="header-content">
+        <h1 class="game-title">
+          <span class="title-icon">&#127924;</span>
+          Lat The Bai
+        </h1>
+        <p class="game-subtitle">Thu van may cua ban hom nay!</p>
+      </div>
+
+      <div class="turns-display">
+        <div class="turns-label">Luot con lai</div>
+        <div class="turns-count" id="turns-dots">
+          <span class="turn-dot active">&#127919;</span>
+          <span class="turn-dot active">&#127919;</span>
+          <span class="turn-dot active">&#127919;</span>
+        </div>
+        <div class="turns-number"><span id="turns-count">3</span>/3</div>
+      </div>
+
+      <div class="header-actions">
+        <button class="logout-btn" onclick="window.Game.logout()" title="Dong">
+          &#128682;
+        </button>
+      </div>
+    </header>
+
+    <!-- User Welcome -->
+    <div class="user-welcome" id="user-welcome">
+      <div class="user-avatar">
+        <span class="avatar-icon" id="user-tier-icon">&#128081;</span>
+      </div>
+      <div class="user-info">
+        <span class="user-name">Xin chao, <strong id="user-name">User</strong>!</span>
+        <span class="user-tier tier-gold" id="user-tier">Gold Member</span>
+      </div>
+      <div class="user-points">
+        <span class="points-label">Diem tich luy</span>
+        <span class="points-value" id="user-points">0</span>
+      </div>
+    </div>
+
+    <!-- Game Board -->
+    <div class="game-board" id="game-board">
+      <div class="card" id="card-1" onclick="window.Game.flipCard(this, '1')">
+        <div class="card-loading"><div class="card-spinner"></div></div>
+        <div class="card-inner">
+          <div class="card-front">
+            <span class="card-icon">?</span>
+            <span class="card-number">1</span>
+          </div>
+          <div class="card-back">
+            <span class="reward-text"></span>
+          </div>
+        </div>
+      </div>
+      <div class="card" id="card-2" onclick="window.Game.flipCard(this, '2')">
+        <div class="card-loading"><div class="card-spinner"></div></div>
+        <div class="card-inner">
+          <div class="card-front">
+            <span class="card-icon">?</span>
+            <span class="card-number">2</span>
+          </div>
+          <div class="card-back">
+            <span class="reward-text"></span>
+          </div>
+        </div>
+      </div>
+      <div class="card" id="card-3" onclick="window.Game.flipCard(this, '3')">
+        <div class="card-loading"><div class="card-spinner"></div></div>
+        <div class="card-inner">
+          <div class="card-front">
+            <span class="card-icon">?</span>
+            <span class="card-number">3</span>
+          </div>
+          <div class="card-back">
+            <span class="reward-text"></span>
+          </div>
+        </div>
+      </div>
+      <div class="card" id="card-4" onclick="window.Game.flipCard(this, '4')">
+        <div class="card-loading"><div class="card-spinner"></div></div>
+        <div class="card-inner">
+          <div class="card-front">
+            <span class="card-icon">?</span>
+            <span class="card-number">4</span>
+          </div>
+          <div class="card-back">
+            <span class="reward-text"></span>
+          </div>
+        </div>
+      </div>
+      <div class="card" id="card-5" onclick="window.Game.flipCard(this, '5')">
+        <div class="card-loading"><div class="card-spinner"></div></div>
+        <div class="card-inner">
+          <div class="card-front">
+            <span class="card-icon">?</span>
+            <span class="card-number">5</span>
+          </div>
+          <div class="card-back">
+            <span class="reward-text"></span>
+          </div>
+        </div>
+      </div>
+      <div class="card" id="card-6" onclick="window.Game.flipCard(this, '6')">
+        <div class="card-loading"><div class="card-spinner"></div></div>
+        <div class="card-inner">
+          <div class="card-front">
+            <span class="card-icon">?</span>
+            <span class="card-number">6</span>
+          </div>
+          <div class="card-back">
+            <span class="reward-text"></span>
+          </div>
+        </div>
+      </div>
+      <div class="card" id="card-7" onclick="window.Game.flipCard(this, '7')">
+        <div class="card-loading"><div class="card-spinner"></div></div>
+        <div class="card-inner">
+          <div class="card-front">
+            <span class="card-icon">?</span>
+            <span class="card-number">7</span>
+          </div>
+          <div class="card-back">
+            <span class="reward-text"></span>
+          </div>
+        </div>
+      </div>
+      <div class="card" id="card-8" onclick="window.Game.flipCard(this, '8')">
+        <div class="card-loading"><div class="card-spinner"></div></div>
+        <div class="card-inner">
+          <div class="card-front">
+            <span class="card-icon">?</span>
+            <span class="card-number">8</span>
+          </div>
+          <div class="card-back">
+            <span class="reward-text"></span>
+          </div>
+        </div>
+      </div>
+      <div class="card" id="card-9" onclick="window.Game.flipCard(this, '9')">
+        <div class="card-loading"><div class="card-spinner"></div></div>
+        <div class="card-inner">
+          <div class="card-front">
+            <span class="card-icon">?</span>
+            <span class="card-number">9</span>
+          </div>
+          <div class="card-back">
+            <span class="reward-text"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Instructions -->
+    <div class="game-instructions">
+      <p>Chon mot the bai de lat va nhan phan thuong!</p>
+      <p class="no-turns-message hidden" id="no-turns-message">
+        Ban da het luot hom nay. Hay quay lai vao ngay mai!
+      </p>
+    </div>
+
+  </div>
+
+  <!-- ========== MODAL ========== -->
+  <div id="modal-state" class="modal-overlay hidden" onclick="window.Game.closeModal()">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="window.Game.closeModal()">&times;</button>
+
+      <div class="modal-icon">
+        <span id="modal-icon">&#127881;</span>
+      </div>
+
+      <h2 class="modal-title" id="modal-title">Chuc mung!</h2>
+
+      <p class="reward-display">
+        <span class="reward-label">Phan thuong cua ban:</span>
+        <span class="reward-value" id="modal-reward">50K</span>
+      </p>
+
+      <div class="modal-actions">
+        <button class="btn btn-primary" id="claim-btn" onclick="window.Game.claimReward()">
+          <span class="btn-icon">&#127873;</span>
+          Nhan thuong
+        </button>
+        <button class="btn btn-secondary" onclick="window.Game.shareResult()">
+          <span class="btn-icon">&#128228;</span>
+          Chia se
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  // ============ GET INJECTED DEPENDENCIES ============
+  var ZMA = window.ZMA || {};
+  var Howl = ZMA.Howl;
+  var Sentry = ZMA.Sentry || { captureMessage: function(){}, captureException: function(){} };
+  var config = ZMA.config || {};
+  var appSettings = config.appSettings || {};
+
+  // ============ API CONFIG ============
+  var API_BASE = 'https://sandbox-api-zma.antsomi.com/api';
+  var API_PREFIX = '/zma/phuc-long';
+
+  // ============ AUDIO SETUP ============
+  var bgMusic = null;
+  var clickSound = null;
+  var winSound = null;
+
+  function initAudio() {
+    try {
+      if (!Howl) return;
+
+      bgMusic = new Howl({
+        src: ['https://assets.mixkit.co/music/preview/mixkit-games-worldbeat-466.mp3'],
+        loop: true,
+        volume: 0.3,
+        html5: true,
+      });
+
+      clickSound = new Howl({
+        src: ['https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3'],
+        volume: 0.5,
+      });
+
+      winSound = new Howl({
+        src: ['https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3'],
+        volume: 0.6,
+      });
+
+      Sentry.captureMessage('[CardFlip] Audio initialized', { level: 'info' });
+    } catch (err) {
+      Sentry.captureException(err);
+    }
+  }
+
+  function playBgMusic() {
+    if (bgMusic && !bgMusic.playing()) {
+      bgMusic.play();
+    }
+  }
+
+  function stopBgMusic() {
+    if (bgMusic) bgMusic.stop();
+  }
+
+  function playClickSound() {
+    if (clickSound) clickSound.play();
+  }
+
+  function playWinSound() {
+    if (winSound) winSound.play();
+  }
+
+  // ============ GAME STATE ============
+  var gameState = {
+    accessToken: null,
+    user: null,
+    turns: 0,
+    maxTurns: 3,
+    allocatedVoucher: null,
+    currentReward: null,
+    isFlipping: false
+  };
+
+  // ============ API HELPERS ============
+  // Fetch with auth header (uses internal accessToken)
+  function apiFetch(endpoint, options) {
+    options = options || {};
+    var headers = options.headers || {};
+    headers['Authorization'] = 'Bearer ' + gameState.accessToken;
+    headers['Content-Type'] = 'application/json';
+    options.headers = headers;
+
+    return fetch(API_BASE + API_PREFIX + endpoint, options)
+      .then(function(res) {
+        if (res.status === 401 || res.status === 403) {
+          throw new Error('Unauthorized');
+        }
+        return res.json();
+      });
+  }
+
+  // Internal login: exchange Zalo token for internal accessToken
+  // POST /login { accessToken: zaloToken, phoneToken: phoneToken }
+  function internalLogin(zaloToken, phoneToken) {
+    return fetch(API_BASE + API_PREFIX + '/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        accessToken: zaloToken,
+        phoneToken: phoneToken
+      })
+    }).then(function(res) {
+      return res.json();
+    });
+  }
+
+  // Check remaining plays: GET /can-allocate
+  function checkCanPlay() {
+    return apiFetch('/can-allocate');
+  }
+
+  // Allocate voucher (flip card): POST /allocate
+  function allocateVoucher() {
+    return apiFetch('/allocate', {
+      method: 'POST',
+      body: JSON.stringify({})
+    });
+  }
+
+  // Share game: POST /share-game
+  function callShareGameAPI() {
+    return apiFetch('/share-game', {
+      method: 'POST',
+      body: JSON.stringify({})
+    });
+  }
+
+  // ============ DOM HELPERS ============
+  function showState(stateId) {
+    ['loading-state', 'error-state', 'game-state'].forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) el.classList.toggle('hidden', id !== stateId);
+    });
+  }
+
+  function updateTurnsDisplay(turns, maxTurns) {
+    maxTurns = maxTurns || gameState.maxTurns || 3;
+    var dotsEl = document.getElementById('turns-dots');
+    var countEl = document.getElementById('turns-count');
+    var noTurnsEl = document.getElementById('no-turns-message');
+
+    if (dotsEl) {
+      var dots = [];
+      for (var i = 0; i < maxTurns; i++) {
+        var isActive = i < turns;
+        dots.push('<span class="turn-dot ' + (isActive ? 'active' : 'used') + '">' + (isActive ? '&#127919;' : '&#9898;') + '</span>');
+      }
+      dotsEl.innerHTML = dots.join('');
+    }
+    if (countEl) countEl.textContent = turns + '/' + maxTurns;
+    if (noTurnsEl) noTurnsEl.classList.toggle('hidden', turns > 0);
+  }
+
+  function updateUserDisplay(user) {
+    var nameEl = document.getElementById('user-name');
+    var tierEl = document.getElementById('user-tier');
+    var tierIconEl = document.getElementById('user-tier-icon');
+    var pointsEl = document.getElementById('user-points');
+
+    if (nameEl) nameEl.textContent = user.name || 'User';
+    if (tierEl) tierEl.textContent = (user.tier || 'Member');
+    if (tierIconEl) tierIconEl.innerHTML = user.tier === 'Gold' ? '&#128081;' : '&#11088;';
+    if (pointsEl) pointsEl.textContent = (user.points || 0).toLocaleString();
+  }
+
+  function showError(message, icon) {
+    icon = icon || '&#128274;';
+    var msgEl = document.getElementById('error-message');
+    var iconEl = document.getElementById('error-icon');
+    if (msgEl) msgEl.innerHTML = message;
+    if (iconEl) iconEl.innerHTML = icon;
+    showState('error-state');
+  }
+
+  function showModal(reward, isWin) {
+    isWin = isWin !== false;
+    var modalEl = document.getElementById('modal-state');
+    var iconEl = document.getElementById('modal-icon');
+    var titleEl = document.getElementById('modal-title');
+    var rewardEl = document.getElementById('modal-reward');
+
+    gameState.currentReward = reward;
+
+    if (iconEl) iconEl.innerHTML = isWin ? '&#127881;' : '&#128546;';
+    if (titleEl) titleEl.textContent = isWin ? 'Chuc mung!' : 'Tiec qua!';
+    if (rewardEl) rewardEl.textContent = reward || 'Phan thuong';
+    if (modalEl) modalEl.classList.remove('hidden');
+
+    if (isWin) playWinSound();
+  }
+
+  function hideModal() {
+    var modalEl = document.getElementById('modal-state');
+    if (modalEl) modalEl.classList.add('hidden');
+  }
+
+  // ============ AUTH FLOW ============
+  // Correct flow:
+  // 1. Request Zalo permissions (OA follow + phone)
+  // 2. Get Zalo accessToken + phoneToken
+  // 3. Call internal login API to exchange for internal accessToken
+  // 4. Use internal accessToken for all subsequent API calls
+  function authenticate() {
+    Sentry.captureMessage('[CardFlip] Starting auth flow', { level: 'info' });
+
+    var zaloToken = null;
+    var phoneToken = null;
+
+    // Step 1: Request Zalo permissions (OA follow + phone)
+    window.ZMA.requestPermissions().then(function(permResult) {
+      console.log('[CardFlip] Permission result:', permResult);
+
+      if (!permResult || !permResult.success) {
+        var errorMsg = appSettings?.globals?.systemErrorMessages?.requestPermission
+          || 'Vui long cap quyen de choi game';
+        showError(errorMsg);
+        Sentry.captureMessage('[CardFlip] Permission denied', { level: 'warning' });
+        return Promise.reject(new Error('Permission denied'));
+      }
+
+      // Step 2: Get Zalo access token
+      return window.ZMA.getToken();
+    }).then(function(tokenResult) {
+      console.log('[CardFlip] Zalo token result:', tokenResult);
+
+      // tokenResult could be string or object { accessToken }
+      zaloToken = typeof tokenResult === 'string' ? tokenResult : (tokenResult && tokenResult.accessToken);
+      if (!zaloToken) {
+        throw new Error('No Zalo access token');
+      }
+
+      Sentry.captureMessage('[CardFlip] Got Zalo token', { level: 'info' });
+
+      // Step 3: Get phone token if permission was granted
+      return window.ZMA.getPhoneToken ? window.ZMA.getPhoneToken() : Promise.resolve(null);
+    }).then(function(phoneTokenResult) {
+      console.log('[CardFlip] Phone token result:', phoneTokenResult);
+
+      // phoneToken could be string or object { token }
+      phoneToken = phoneTokenResult
+        ? (typeof phoneTokenResult === 'string' ? phoneTokenResult : phoneTokenResult.token)
+        : null;
+
+      // Step 4: Call internal login API to exchange Zalo token for internal accessToken
+      return internalLogin(zaloToken, phoneToken);
+    }).then(function(loginResult) {
+      console.log('[CardFlip] Internal login result:', loginResult);
+
+      if (!loginResult || !loginResult.data || !loginResult.data.accessToken) {
+        throw new Error(loginResult?.message || 'Login failed - no access token');
+      }
+
+      // Step 5: Store internal accessToken (NOT the Zalo token!)
+      gameState.accessToken = loginResult.data.accessToken;
+
+      Sentry.captureMessage('[CardFlip] Got internal accessToken', { level: 'info' });
+
+      // Step 6: Get user info from Zalo (for display purposes)
+      return window.ZMA.getUserInfo();
+    }).then(function(userInfo) {
+      console.log('[CardFlip] User info:', userInfo);
+
+      gameState.user = {
+        id: userInfo.id,
+        name: userInfo.name || 'User',
+        avatar: userInfo.avatar,
+        tier: 'Member',
+        points: 0
+      };
+
+      // Step 7: Check remaining plays from backend (now using internal token)
+      return checkCanPlay();
+    }).then(function(canPlayResult) {
+      console.log('[CardFlip] Can play result:', canPlayResult);
+
+      if (canPlayResult.code !== 200) {
+        throw new Error(canPlayResult.message || 'Cannot check play status');
+      }
+
+      var data = canPlayResult.data || {};
+      // remainPlays or calculate from redemptionCount
+      var remainPlays = data.remainPlays;
+      if (remainPlays === undefined && data.redemptionCount !== undefined) {
+        remainPlays = gameState.maxTurns - data.redemptionCount;
+      }
+      gameState.turns = Math.max(0, remainPlays || 0);
+
+      Sentry.captureMessage('[CardFlip] Auth success', {
+        level: 'info',
+        extra: { userId: gameState.user.id, turns: gameState.turns }
+      });
+
+      // Step 8: Update UI
+      updateUserDisplay(gameState.user);
+      updateTurnsDisplay(gameState.turns, gameState.maxTurns);
+
+      // Step 9: Show game & play music
+      showState('game-state');
+      playBgMusic();
+
+    }).catch(function(err) {
+      console.error('[CardFlip] Auth error:', err);
+      Sentry.captureException(err);
+
+      var errorMsg = appSettings?.globals?.systemErrorMessages?.networkError
+        || 'Khong the ket noi. Vui long thu lai!';
+      showError(errorMsg, '&#10060;');
+    });
+  }
+
+  // ============ GAME HANDLERS ============
+  function flipCard(el, cardId) {
+    if (el.classList.contains('flipped') || el.classList.contains('flipping')) return;
+    if (gameState.isFlipping) return;
+
+    if (gameState.turns <= 0) {
+      var noTurnMsg = appSettings?.games?.xmasGame?.noTurnLeftError
+        || 'Ban da het luot hom nay!';
+      alert(noTurnMsg);
+      return;
+    }
+
+    playClickSound();
+    el.classList.add('flipping');
+    gameState.isFlipping = true;
+
+    // Call real API: POST /allocate
+    allocateVoucher().then(function(result) {
+      console.log('[CardFlip] Allocate result:', result);
+
+      el.classList.remove('flipping');
+      gameState.isFlipping = false;
+
+      if (result.code !== 200 || !result.data) {
+        // Out of voucher or error
+        var outOfCodeMsg = appSettings?.globals?.systemErrorMessages?.outOfCode
+          || 'Rat tiec, qua tang da het. Vui long thu lai sau!';
+        showError(outOfCodeMsg, '&#128546;');
+        return;
+      }
+
+      // Success - got voucher
+      el.classList.add('flipped');
+
+      var voucherData = result.data;
+      var webContents = voucherData.webContents || {};
+      var contents = webContents.contents || {};
+      var rewardName = contents.name || contents.promotion_code || 'Qua tang';
+
+      // Update card back with reward
+      var rewardEl = el.querySelector('.card-back .reward-text');
+      if (rewardEl) rewardEl.textContent = rewardName;
+
+      // Update turns
+      gameState.turns = Math.max(0, gameState.turns - 1);
+      updateTurnsDisplay(gameState.turns, gameState.maxTurns);
+
+      // Save allocated voucher
+      gameState.allocatedVoucher = voucherData;
+
+      // Call global tracking if available
+      var globalTracking = contents.globalTracking;
+      if (globalTracking) {
+        if (globalTracking.impression) fetch(globalTracking.impression).catch(function(){});
+        if (globalTracking.view) fetch(globalTracking.view).catch(function(){});
+      }
+
+      Sentry.captureMessage('[CardFlip] Card flipped - voucher allocated', {
+        level: 'info',
+        extra: { cardId: cardId, reward: rewardName, voucherId: voucherData.id }
+      });
+
+      // Show modal with reward
+      showModal(rewardName, true);
+
+    }).catch(function(err) {
+      console.error('[CardFlip] Flip error:', err);
+      el.classList.remove('flipping');
+      gameState.isFlipping = false;
+      Sentry.captureException(err);
+
+      var errorMsg = appSettings?.globals?.systemErrorMessages?.networkError
+        || 'Co loi xay ra. Vui long thu lai!';
+      alert(errorMsg);
+    });
+  }
+
+  function claimReward() {
+    // Voucher is already allocated when flip, just close modal
+    // Navigate to voucher list if needed
+    Sentry.captureMessage('[CardFlip] Reward claimed', {
+      level: 'info',
+      extra: { reward: gameState.currentReward }
+    });
+
+    hideModal();
+
+    // Optionally navigate to voucher list
+    // window.ZMA.navigate('/gift', { tab: 'redeemed' });
+  }
+
+  function shareResult() {
+    playClickSound();
+    var reward = gameState.currentReward;
+    var shareConfig = appSettings?.games?.xmasGame || {};
+
+    // Call share API to track
+    callShareGameAPI().then(function(result) {
+      console.log('[CardFlip] Share API result:', result);
+    }).catch(function(err) {
+      console.error('[CardFlip] Share API error:', err);
+    });
+
+    // Open Zalo share sheet
+    window.ZMA.share({
+      type: 'zmp_deep_link',
+      data: {
+        title: shareConfig.shareTitle || 'Lat The Bai - Phuc Long',
+        description: shareConfig.shareDescription || ('Toi vua nhan duoc ' + reward + ' tu tro choi Lat The Bai!'),
+        thumbnail: shareConfig.shareThumbnail || '',
+        path: shareConfig.sharePath || ''
+      },
+    }).then(function(result) {
+      Sentry.captureMessage('[CardFlip] Share result', {
+        level: 'info',
+        extra: { reward: reward, result: result }
+      });
+    }).catch(function(err) {
+      Sentry.captureException(err);
+    });
+  }
+
+  function logout() {
+    stopBgMusic();
+    window.ZMA.closeApp();
+  }
+
+  function retry() {
+    showState('loading-state');
+    // Reset cards
+    document.querySelectorAll('.card').forEach(function(card) {
+      card.classList.remove('flipped', 'flipping');
+      var rewardEl = card.querySelector('.reward-text');
+      if (rewardEl) rewardEl.textContent = '';
+    });
+    authenticate();
+  }
+
+  function addTurn() {
+    playClickSound();
+    // Open Phuc Long delivery app to add turns
+    window.ZMA.openMiniApp('4122484211343703722');
+  }
+
+  function navigateToVouchers() {
+    window.ZMA.navigate('/gift', { tab: 'redeemed' });
+  }
+
+  // ============ EXPOSE WINDOW.GAME ============
+  window.Game = {
+    flipCard: flipCard,
+    claimReward: claimReward,
+    shareResult: shareResult,
+    closeModal: hideModal,
+    logout: logout,
+    retry: retry,
+    addTurn: addTurn,
+    navigateToVouchers: navigateToVouchers,
+    init: function() {
+      initAudio();
+      authenticate();
+    }
+  };
+
+})();
+</script>
