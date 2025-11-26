@@ -684,9 +684,9 @@ html { font-size: 16px; }
         return;
       }
 
-      // Using CORS-friendly audio sources
+      // Using public CDN audio sources with CORS enabled
       bgMusic = new Howl({
-        src: ['https://cdn.pixabay.com/audio/2022/12/10/audio_99c508a2d6.mp3'],
+        src: ['https://commondatastorage.googleapis.com/codeskulptor-assets/Epoq-Lepidoptera.ogg'],
         loop: true,
         volume: 0.3,
         html5: true,
@@ -695,14 +695,14 @@ html { font-size: 16px; }
       });
 
       clickSound = new Howl({
-        src: ['https://cdn.pixabay.com/audio/2022/03/10/audio_c8c8a73467.mp3'],
+        src: ['https://commondatastorage.googleapis.com/codeskulptor-assets/week7-button.m4a'],
         volume: 0.5,
         onload: function() { console.log('[CardFlip] clickSound loaded'); },
         onloaderror: function(id, err) { console.error('[CardFlip] clickSound load error:', err); }
       });
 
       winSound = new Howl({
-        src: ['https://cdn.pixabay.com/audio/2021/08/04/audio_0625c1539c.mp3'],
+        src: ['https://commondatastorage.googleapis.com/codeskulptor-demos/pyman_assets/eatedible.ogg'],
         volume: 0.6,
         onload: function() { console.log('[CardFlip] winSound loaded'); },
         onloaderror: function(id, err) { console.error('[CardFlip] winSound load error:', err); }
